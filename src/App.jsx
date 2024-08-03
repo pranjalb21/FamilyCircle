@@ -1,16 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { Body, Footer, NavBar, Profile, SideBar } from "./components";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>Family circle</div>
-    </>
-  )
+    return (
+        <div className="flex flex-col w-full h-screen bg-slate-200 font-[Open Sans]">
+            <NavBar />
+            <div className="flex w-full bg-red-50">
+                <SideBar/>
+                <Outlet />
+            </div>
+            <Footer />
+        </div>
+    );
 }
 
-export default App
+export default App;
