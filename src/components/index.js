@@ -4,12 +4,32 @@ import Logo from "./Logo";
 import SideBar from "./sidebar/SideBar";
 import Profile from "./profile/Profile";
 import MediaPostCard from "./postCard/MediaPostCard";
-import Body from "./body/Body";
+import MyProfile from "./myProfile/MyProfile";
 import VideoContainer from "./postContainer/VideoContainer";
 import ImageContainer from "./postContainer/ImageContainer";
 import TweetContainer from "./postContainer/TweetContainer";
 import TweetPostCard from "./postCard/TweetPostCard";
 import Footer from "./footer/Footer";
+import Home from "./home/Home";
+import Container from "./container/Container";
+import Avatar from "./Avatar";
+import LikedVideo from "./likedVideo/LikedVideo";
+import Collection from "./collection/Collection";
+import Subscriber from "./subscriber/Subscriber";
+import History from "./history/History";
+import Login from "./login/Login";
+import Signup from "./signup/Signup";
+import BottomBar from "./sidebar/BottomBar";
+
+import CollectionPage from "../pages/CollectionPage";
+import HistoryPage from "../pages/HistoryPage";
+import HomePage from "../pages/HomePage";
+import LikedVideoPage from "../pages/LikedVideoPage";
+import ProfilePage from "../pages/ProfilePage";
+import SubscriberPage from "../pages/SubscriberPage";
+import SubscriberTag from "./subsciberTag/SubscriberTag";
+import LoginPage from "../pages/LoginPage";
+import SignupPage from "../pages/SignupPage";
 
 import logoImage from "../assets/logo.png";
 import userImage from "../assets/user.jpg";
@@ -37,7 +57,7 @@ export {
     NavBar,
     Logo,
     SideBar,
-    Body,
+    MyProfile,
     Profile,
     MediaPostCard,
     TweetPostCard,
@@ -45,6 +65,25 @@ export {
     ImageContainer,
     TweetContainer,
     Footer,
+    Home,
+    Container,
+    Avatar,
+    History,
+    LikedVideo,
+    Collection,
+    Subscriber,
+    CollectionPage,
+    HistoryPage,
+    HomePage,
+    LikedVideoPage,
+    ProfilePage,
+    SubscriberPage,
+    SubscriberTag,
+    Login,
+    LoginPage,
+    Signup,
+    SignupPage,
+    BottomBar,
     logoImage,
     userImage,
     dummyImage,
@@ -63,5 +102,5 @@ export {
     FaLinkedin,
     FaGithub,
     AiFillLike,
-    FaRegComment
+    FaRegComment,
 };

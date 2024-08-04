@@ -4,34 +4,73 @@ import App from "./App.jsx";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ProfilePage from "./pages/ProfilePage.jsx";
-import { ImageContainer, TweetContainer, VideoContainer } from "./components/index.js";
+import {
+    ImageContainer,
+    TweetContainer,
+    VideoContainer,
+    HomePage,
+    SubscriberPage,
+    CollectionPage,
+    HistoryPage,
+    LikedVideoPage,
+    LoginPage,
+    SignupPage,
+} from "./components/index.js";
 
 const router = createBrowserRouter([
     {
-        path:"/",
+        path: "/",
         element: <App />,
-        children:[
+        children: [
             {
-                path:"profile",
+                path: "",
+                element: <HomePage />,
+            },
+            {
+                path: "subscribers",
+                element: <SubscriberPage />,
+            },
+            {
+                path: "collections",
+                element: <CollectionPage />,
+            },
+            {
+                path: "history",
+                element: <HistoryPage />,
+            },
+            {
+                path: "liked-videos",
+                element: <LikedVideoPage />,
+            },
+            {
+                path: "profile",
                 element: <ProfilePage />,
-                children:[
+                children: [
                     {
-                        path:"videos",
-                        element:<VideoContainer/>
+                        path: "videos",
+                        element: <VideoContainer />,
                     },
                     {
-                        path:"tweets",
-                        element:<TweetContainer/>
+                        path: "tweets",
+                        element: <TweetContainer />,
                     },
                     {
-                        path:"images",
-                        element:<ImageContainer/>
+                        path: "images",
+                        element: <ImageContainer />,
                     },
-                ]
-            }
-        ]
-    }
-])
+                ],
+            },
+            {
+                path: "login",
+                element: <LoginPage />,
+            },
+            {
+                path: "signup",
+                element: <SignupPage />,
+            },
+        ],
+    },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>

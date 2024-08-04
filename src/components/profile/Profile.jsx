@@ -1,5 +1,5 @@
 import React from "react";
-import { RiSettings2Fill, userImage } from "..";
+import { Avatar, RiSettings2Fill, userImage } from "..";
 import { NavLink } from "react-router-dom";
 import { isPending } from "@reduxjs/toolkit";
 
@@ -7,9 +7,7 @@ export default function Profile() {
     return (
         <div className="flex flex-col  bg-slate-400 text-white">
             <div className="flex gap-4 p-4">
-                <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-500">
-                    <img src={userImage} alt="" className="object-contain" />
-                </div>
+                <Avatar image={userImage} title={'title'} size={'large'} />
                 <div className=" p-4">
                     <h1 className="text-2xl font-bold">Name</h1>
                     <h4>@username</h4>
