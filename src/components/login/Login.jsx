@@ -1,13 +1,32 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { z } from "zod";
+import {errorMsg} from ".."
 
 export default function Login() {
+    const schema = z.object({
+        email: z
+            .string({ message: errorMsg.email.required })
+            .trim()
+            .email({ message: errorMsg.email.validation }),
+        password: z
+            .string({ message: errorMsg.passowrd.required })
+            .min(6, { message: errorMsg.passowrd.length })
+            .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,{message:errorMsg.passowrd.validation}),
+    });
     const {
         handleSubmit,
         register,
         formState: { errors },
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            email: "",
+            password: "",
+        },
+        resolver: zodResolver(schema),
+    });
     const handleSubmitForm = (values) => console.log(values);
 
     return (
@@ -21,21 +40,19 @@ export default function Login() {
                     <div className="flex flex-col gap-1">
                         <label htmlFor="email">Email Id / Username</label>
                         <input
-                            type="email"
+                            type="text"
                             name="email"
                             id="email"
                             autoComplete="off"
-                            {...register("email", {
-                                required: "Required",
-                                // pattern: {
-                                //     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                //     message: "Invalid email address",
-                                // },
-                            })}
+                            {...register("email")}
                             placeholder="Email or Username"
                             className="px-2 py-2 outline-none rounded-md"
                         />
-                        {errors.email&&errors.email.message}
+                        {errors.email && (
+                            <p className="text-red-500">
+                                {errors.email.message}
+                            </p>
+                        )}
                     </div>
                     <div className="flex flex-col gap-1">
                         <label htmlFor="password">Password</label>
@@ -44,15 +61,16 @@ export default function Login() {
                             name="password"
                             id="password"
                             {...register("password", {
-                                required: "Required",
-                                // pattern: {
-                                //     value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/gm,
-                                //     message: "Invalid password",
-                                // },
+                                required: "Password is required.",
                             })}
                             placeholder="Password"
                             className="px-2 py-2 outline-none rounded-md"
                         />
+                        {errors.password && (
+                            <p className="text-red-500">
+                                {errors.password.message}
+                            </p>
+                        )}
                     </div>
                     <div className="flex flex-col gap-1">
                         <button

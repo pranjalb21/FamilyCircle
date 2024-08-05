@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 
 function App() {
     return (
-        <div className="flex flex-col w-full h-screen bg-slate-200 font-[Open Sans]">
+        <div className="flex flex-col w-full font-[Open Sans]">
             <NavBar />
-            <div className="flex w-full bg-red-50">
+            <div className="flex w-full ">
                 <SideBar/>
                 <Outlet />
                 <BottomBar/>

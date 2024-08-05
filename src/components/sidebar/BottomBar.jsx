@@ -38,7 +38,7 @@ export default function BottomBar() {
         },
     ];
     return (
-        <div className="w-full fixed bottom-0 flex bg-slate-600 text-white md:hidden">
+        <div className="w-full fixed bottom-0 flex bg-slate-600 text-white md:hidden text-2xl">
             <ul className="bg-red-300 w-full flex justify-center">
                 {menuBar.map((menu) => (
                     <NavLink

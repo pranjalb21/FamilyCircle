@@ -4,8 +4,8 @@ import { NavLink } from "react-router-dom";
 
 export default function NavBar() {
     return (
-        <header className="w-full shadow-lg p-2">
-            <nav className="mx-auto flex justify-around items-center bg-slate-200">
+        <header className="w-full shadow-md box-border">
+            <nav className="mx-auto flex justify-around items-center bg-slate-200 p-2">
                 <Logo />
                 <div className="bg-transparent flex items-center gap-1 px-2 rounded-2xl overflow-hidden sm:border-2 sm:border-black sm:shadow-sm">
                     <FaSearch className="text-xl cursor-pointer" />

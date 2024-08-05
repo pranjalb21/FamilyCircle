@@ -15,6 +15,7 @@ import {
     LikedVideoPage,
     LoginPage,
     SignupPage,
+    VideoPage,
 } from "./components/index.js";
 
 const router = createBrowserRouter([
@@ -67,6 +68,10 @@ const router = createBrowserRouter([
             {
                 path: "signup",
                 element: <SignupPage />,
+            },
+            {
+                path: "videos/:id",
+                element: <VideoPage />,
             },
         ],
     },

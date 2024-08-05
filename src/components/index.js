@@ -1,5 +1,7 @@
-import NavBar from "./navbar/NavBar";
 import conf from "../config/conf";
+import errorMsg from "../config/errorMessage";
+
+import NavBar from "./navbar/NavBar";
 import Logo from "./Logo";
 import SideBar from "./sidebar/SideBar";
 import Profile from "./profile/Profile";
@@ -20,6 +22,7 @@ import History from "./history/History";
 import Login from "./login/Login";
 import Signup from "./signup/Signup";
 import BottomBar from "./sidebar/BottomBar";
+import Video from "./video/Video";
 
 import CollectionPage from "../pages/CollectionPage";
 import HistoryPage from "../pages/HistoryPage";
@@ -30,10 +33,13 @@ import SubscriberPage from "../pages/SubscriberPage";
 import SubscriberTag from "./subsciberTag/SubscriberTag";
 import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SignupPage";
+import VideoPage from "../pages/VideoPage";
 
 import logoImage from "../assets/logo.png";
 import userImage from "../assets/user.jpg";
 import dummyImage from "../assets/DummyPost.jpg";
+
+import video from "../assets/video.mp4"
 
 import { FaSearch } from "react-icons/fa";
 import { IoHomeOutline } from "react-icons/io5";
@@ -54,6 +60,7 @@ import { FaRegComment } from "react-icons/fa";
 
 export {
     conf,
+    errorMsg,
     NavBar,
     Logo,
     SideBar,
@@ -78,15 +85,18 @@ export {
     LikedVideoPage,
     ProfilePage,
     SubscriberPage,
+    VideoPage,
     SubscriberTag,
     Login,
     LoginPage,
     Signup,
     SignupPage,
     BottomBar,
+    Video,
     logoImage,
     userImage,
     dummyImage,
+    video,
     FaSearch,
     IoHomeOutline,
     SlLike,

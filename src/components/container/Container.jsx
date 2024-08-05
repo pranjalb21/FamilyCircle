@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function Container({ children }) {
-    return <div className=" w-full min-h-svh">{children}</div>;
+    return <div className=" w-full">{children}</div>;
 }

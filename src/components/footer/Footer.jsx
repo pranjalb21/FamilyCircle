@@ -10,7 +10,7 @@ import {
 
 export default function Footer() {
     return (
-        <div className="p-4 flex gap-4 justify-evenly mt-auto bg-green-100 md:block hidden">
+        <div className="p-4 md:flex gap-4 justify-evenly mt-auto bg-green-100 hidden">
             <div className="flex flex-col">
                 <Logo />
                 <p className="px-2">
