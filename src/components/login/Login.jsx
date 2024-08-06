@@ -1,20 +1,26 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import {errorMsg} from ".."
+import { errorMsg } from "..";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { login, userLoginStatus } from "../../store/authSlice";
 
 export default function Login() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const loginStatus = useSelector(userLoginStatus);
     const schema = z.object({
-        email: z
+        userNameOrEmail: z
             .string({ message: errorMsg.email.required })
             .trim()
-            .email({ message: errorMsg.email.validation }),
+            .min({ message: errorMsg.username.length }),
         password: z
             .string({ message: errorMsg.passowrd.required })
-            .min(6, { message: errorMsg.passowrd.length })
-            .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/,{message:errorMsg.passowrd.validation}),
+            .min(6, { message: errorMsg.passowrd.length }),
     });
     const {
         handleSubmit,
@@ -22,12 +28,31 @@ export default function Login() {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            email: "",
+            userNameOrEmail: "",
             password: "",
         },
         resolver: zodResolver(schema),
     });
-    const handleSubmitForm = (values) => console.log(values);
+    const handleSubmitForm = async (values) => {
+        const result = await axios
+            .post("http://localhost:3000/api/v1/users/login", values)
+            .then((res) => res.data)
+            .catch((err) => err.response.data);
+        console.log(result);
+        if (result.success) {
+            toast.success(result.message);
+            dispatch(login(result.data.user));
+            localStorage.setItem("user", JSON.stringify(result.data.user));
+            localStorage.setItem("accessToken", result.data.accessToken);
+            navigate("/");
+            console.log(result);
+        } else {
+            toast.error(result.message);
+        }
+    };
+    useEffect(() => {
+        if (loginStatus) navigate("/");
+    }, [loginStatus]);
 
     return (
         <div className="flex justify-center p-2 content-center h-screen">
@@ -38,19 +63,19 @@ export default function Login() {
                     className="flex flex-col gap-2 mt-4"
                 >
                     <div className="flex flex-col gap-1">
-                        <label htmlFor="email">Email Id / Username</label>
+                        <label htmlFor="email">Email Id/Username</label>
                         <input
                             type="text"
-                            name="email"
-                            id="email"
+                            name="userNameOrEmail"
+                            id="userNameOrEmail"
                             autoComplete="off"
-                            {...register("email")}
+                            {...register("userNameOrEmail")}
                             placeholder="Email or Username"
                             className="px-2 py-2 outline-none rounded-md"
                         />
-                        {errors.email && (
+                        {errors.userNameOrEmail && (
                             <p className="text-red-500">
-                                {errors.email.message}
+                                {errors.userNameOrEmail.message}
                             </p>
                         )}
                     </div>

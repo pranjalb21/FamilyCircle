@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { errorMsg } from "..";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSelector } from "react-redux";
+import { loggedInUser } from "../../store/authSlice";
 
 export default function Signup() {
     const MAX_FILE_SIZE = 5 * 1024 * 1024; // 10 MB
     const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/jpg"];
+    const loginStatus = useSelector(loggedInUser)
+    const navigate = useNavigate()
     const schema = z
         .object({
             fullName: z
@@ -58,7 +62,9 @@ export default function Signup() {
         resolver: zodResolver(schema),
     });
     const handleSubmitForm = (values) => console.log(values);
-
+    useEffect(() => {
+        if (loginStatus) navigate("/");
+    }, [loginStatus]);
     return (
         <div className="flex justify-center p-2 content-center h-screen overflow-y-scroll">
             <div className="bg-slate-300 rounded-md p-4 flex flex-col self-center -translate-y-14 min-w-96">

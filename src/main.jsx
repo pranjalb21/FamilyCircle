@@ -16,7 +16,11 @@ import {
     LoginPage,
     SignupPage,
     VideoPage,
+    store,
 } from "./components/index.js";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Provider } from "react-redux";
 
 const router = createBrowserRouter([
     {
@@ -78,7 +82,23 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+    
+    <Provider store={store}>
     <React.StrictMode>
         <RouterProvider router={router} />
+        <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition:Bounce
+        />
     </React.StrictMode>
+    </Provider>
 );

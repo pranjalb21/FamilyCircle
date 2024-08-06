@@ -58,6 +58,8 @@ import { FaGithub } from "react-icons/fa";
 import { AiFillLike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
 
+import store from "../store/store";
+
 export {
     conf,
     errorMsg,
@@ -113,4 +115,5 @@ export {
     FaGithub,
     AiFillLike,
     FaRegComment,
+    store,
 };

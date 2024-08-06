@@ -2,15 +2,18 @@ import React from "react";
 import { Avatar, RiSettings2Fill, userImage } from "..";
 import { NavLink } from "react-router-dom";
 import { isPending } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { loggedInUser } from "../../store/authSlice";
 
 export default function Profile() {
+    const user = useSelector(loggedInUser)
     return (
         <div className="flex flex-col  bg-slate-400 text-white">
             <div className="flex gap-4 p-4">
-                <Avatar image={userImage} title={'title'} size={'large'} />
+                <Avatar image={user?user.avatar:userImage} title={'title'} size={'large'} />
                 <div className=" p-4">
-                    <h1 className="text-2xl font-bold">Name</h1>
-                    <h4>@username</h4>
+                    <h1 className="text-2xl font-bold">{user?user.fullName:"Name"}</h1>
+                    <h4>@{user?user.userName:"username"}</h4>
                     <p>
                         <span className="hover:underline cursor-pointer">
                             100k Subrcribers

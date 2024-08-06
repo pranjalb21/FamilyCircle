@@ -1,8 +1,11 @@
 import React from "react";
 import { FaSearch, Logo } from "..";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { loggedInUser } from "../../store/authSlice";
 
 export default function NavBar() {
+    const loginStatus = useSelector(loggedInUser);
     return (
         <header className="w-full shadow-md box-border">
             <nav className="mx-auto flex justify-around items-center bg-slate-200 p-2">
@@ -15,28 +18,30 @@ export default function NavBar() {
                         className="px-2 py-1 outline-none bg-transparent sm:block hidden"
                     />
                 </div>
-                <div className="sm:block hidden gap-4 font-semibold">
-                    <NavLink
-                        to={"/login"}
-                        className={({ isActive }) =>
-                            isActive ? "text-red-600" : ""
-                        }
-                    >
-                        <button className="hover:text-red-600 p-2">
-                            LogIn
-                        </button>
-                    </NavLink>
-                    <NavLink
-                        to={"/signup"}
-                        className={({ isActive }) =>
-                            isActive ? "text-red-600" : ""
-                        }
-                    >
-                        <button className="hover:text-red-600 p-2">
-                            SignUp
-                        </button>
-                    </NavLink>
-                </div>
+                {loginStatus ? null:(
+                    <div className=" gap-4 font-semibold">
+                        <NavLink
+                            to={"/login"}
+                            className={({ isActive }) =>
+                                isActive ? "text-red-600" : ""
+                            }
+                        >
+                            <button className="hover:text-red-600 p-2">
+                                LogIn
+                            </button>
+                        </NavLink>
+                        <NavLink
+                            to={"/signup"}
+                            className={({ isActive }) =>
+                                isActive ? "text-red-600" : ""
+                            }
+                        >
+                            <button className="hover:text-red-600 p-2">
+                                SignUp
+                            </button>
+                        </NavLink>
+                    </div>
+                )}
             </nav>
         </header>
     );
