@@ -6,13 +6,10 @@ import { ToastContainer } from "react-toastify";
 import { login } from "./store/authSlice";
 
 function App() {
-    const user = localStorage.getItem("user");
     const dispatch = useDispatch();
     useEffect(() => {
         if (user) {
-            console.log(user);
             const parsedUser = JSON.parse(user);
-            console.log(parsedUser);
             dispatch(login(parsedUser));
         }
     }, []);

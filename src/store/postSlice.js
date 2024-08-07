@@ -20,4 +20,5 @@ const postSlice = createSlice({
 });
 
 export const { setVideos, unsetVideos } = postSlice.actions;
-export default postSlice;
+export const allVideos = state=>state.post.videos
+export default postSlice.reducer;

@@ -4,6 +4,7 @@ const initialState = {
     status: false,
     user: null,
     subscribers: null,
+    accessToken: null,
 };
 
 const authSlice = createSlice({
@@ -21,7 +22,7 @@ const authSlice = createSlice({
     },
 });
 
-export const {login,logout} = authSlice.actions
-export const userLoginStatus = state=>state.auth.status
-export const loggedInUser = state=>state.auth.user
-export default authSlice.reducer
+export const { login, logout } = authSlice.actions;
+export const userLoginStatus = (state) => state.auth.status;
+export const loggedInUser = (state) => state.auth.user;
+export default authSlice.reducer;

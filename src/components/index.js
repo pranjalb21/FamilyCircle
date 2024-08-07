@@ -23,6 +23,7 @@ import Login from "./login/Login";
 import Signup from "./signup/Signup";
 import BottomBar from "./sidebar/BottomBar";
 import Video from "./video/Video";
+import Loading from "./loading/Loading";
 
 import CollectionPage from "../pages/CollectionPage";
 import HistoryPage from "../pages/HistoryPage";
@@ -76,6 +77,7 @@ export {
     Footer,
     Home,
     Container,
+    Loading,
     Avatar,
     History,
     LikedVideo,
