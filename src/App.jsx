@@ -1,29 +1,82 @@
 import { useEffect, useState } from "react";
-import { BottomBar, Footer, NavBar, SideBar, store } from "./components";
-import { Outlet } from "react-router-dom";
-import { Provider, useDispatch } from "react-redux";
+import { BottomBar, conf, Footer, NavBar, SideBar, store } from "./components";
+import { Outlet, RouterProvider } from "react-router-dom";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { login } from "./store/authSlice";
+import { accessToken, login } from "./store/authSlice";
+import axios from "axios";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App />,
+        children: [
+            {
+                path: "",
+                element: <HomePage />,
+            },
+            {
+                path: "subscribers",
+                element: <SubscriberPage />,
+            },
+            {
+                path: "collections",
+                element: <CollectionPage />,
+            },
+            {
+                path: "history",
+                element: <HistoryPage />,
+            },
+            {
+                path: "liked-videos",
+                element: <LikedVideoPage />,
+            },
+            {
+                path: "profile",
+                element: <ProfilePage />,
+                children: [
+                    {
+                        path: "videos",
+                        element: <VideoContainer />,
+                    },
+                    {
+                        path: "tweets",
+                        element: <TweetContainer />,
+                    },
+                    {
+                        path: "images",
+                        element: <ImageContainer />,
+                    },
+                ],
+            },
+            {
+                path: "login",
+                element: <LoginPage />,
+            },
+            {
+                path: "signup",
+                element: <SignupPage />,
+            },
+            {
+                path: "videos/:id",
+                element: <VideoPage />,
+            },
+        ],
+    },
+]);
 
 function App() {
     const dispatch = useDispatch();
-    useEffect(() => {
-        if (user) {
-            const parsedUser = JSON.parse(user);
-            dispatch(login(parsedUser));
+    const userToken = useSelector(accessToken);
+    const loadUser = async () => {
+        if (!userToken) {
+            const token = await axios.post(`${conf.api}users/generate-token`);
         }
+    };
+    useEffect(() => {
+        loadUser();
     }, []);
-    return (
-        <div className="flex flex-col w-full font-[Open Sans]">
-            <NavBar />
-            <div className="flex w-full ">
-                <SideBar />
-                <Outlet />
-                <BottomBar />
-            </div>
-            <Footer />
-        </div>
-    );
+    return <RouterProvider router={router} />;
 }
 
 export default App;
