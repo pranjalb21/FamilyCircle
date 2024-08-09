@@ -1,9 +1,10 @@
 import { Avatar } from "@mui/material";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 export default function VideoCard({ post }) {
     return (
-        <div className="container sm:w-60 w-72 h-64 shadow-sm hover:shadow-md sm:h-64 rounded-md overflow-hidden cursor-pointer flex flex-col gap-2">
+        <NavLink to={`/${post._id}`} className="container sm:w-60 w-72 h-64 shadow-sm hover:shadow-md sm:h-64 rounded-md overflow-hidden cursor-pointer flex flex-col gap-2">
             <div className="relative h-40 box-border overflow-hidden">
                 <img
                     src={post.thumbnail}
@@ -26,6 +27,6 @@ export default function VideoCard({ post }) {
                     </p>
                 </div>
             </div>
-        </div>
+        </NavLink>
     );
 }

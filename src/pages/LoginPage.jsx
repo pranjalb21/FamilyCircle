@@ -1,9 +1,18 @@
-import React from 'react'
-import Layout from '../components/layout/Layout'
-import Login from '../components/login/Login'
+import React from "react";
+import Login from "../components/login/Login";
+import Container from "../components/container/Container";
+import { useSelector } from "react-redux";
+import { userLoginStatus } from "../store/authSlice";
+import HomePage from "./HomePage";
+import { Navigate } from "react-router-dom";
 
 export default function LoginPage() {
-  return (
-    <Layout><Login /></Layout>
-  )
+    const userStatus = useSelector(userLoginStatus);
+    return userStatus ? (
+        <Navigate to={"/"} />
+    ) : (
+        <Container>
+            <Login />
+        </Container>
+    );
 }
