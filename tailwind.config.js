@@ -11,6 +11,9 @@ export default {
     },
     scale: {
       '101': '1.01',
+    },
+    backgroundImage: {
+      'about': "url('./src/assets/back.png')"
     }
   },
   plugins: [],

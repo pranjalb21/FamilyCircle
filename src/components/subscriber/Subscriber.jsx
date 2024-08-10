@@ -23,11 +23,11 @@ export default function Subscriber() {
         },
     ];
     return (
-        <div className="w-full bg-gray-400 p-4">
+        <div className="w-full bg-gray-50 p-4">
             <div className="flex flex-wrap gap-3 md:justify-start justify-center">
                 {subscribers.map((subscriber) => (
                     <div
-                        className="w-80 bg-white h-20 p-2 rounded-md shadow-sm flex gap-4 cursor-pointer hover:scale-101 duration-300 hover:shadow-lg"
+                        className="w-80 bg-white h-20 p-2 rounded-md shadow-sm flex gap-4 cursor-pointer hover:scale-101 duration-300 hover:shadow-md border"
                         key={subscriber._id}
                     >
                         <Avatar

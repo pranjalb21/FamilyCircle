@@ -108,7 +108,7 @@ function Profile() {
                 </div>
             </div>
             <TopBar />
-            <div className="flex flex-wrap lg:justify-start justify-center gap-3 p-4 mb-10">
+            <div className="flex flex-wrap lg:justify-start justify-center gap-3 p-4 mb-10 bg-gray-50">
                 {posts.map((post) => (
                     <VideoCard post={post} key={post._id} />
                 ))}
