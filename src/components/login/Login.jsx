@@ -8,13 +8,13 @@ import {
     Avatar,
     CssBaseline,
     Grid,
-    Link,
 } from "@mui/material";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import { Link } from "react-router-dom";
 
 function Login() {
     const handleSubmit = (event) => {
@@ -24,7 +24,7 @@ function Login() {
 
     return (
         <div
-            className="flex flex-col justify-center items-center w-full"
+            className="flex flex-col justify-center items-center w-full p-4"
         >
             <Typography component="h1" variant="h4">
                 Family Circle
@@ -75,7 +75,7 @@ function Login() {
                         <Link href="https://www.facebook.com" target="_blank">
                             <FacebookIcon
                                 fontSize="large"
-                                className="hover:shadow-md"
+                                className="hover:shadow-md hover:shadow-blue-300"
                             />
                         </Link>
                     </Grid>
@@ -83,7 +83,7 @@ function Login() {
                         <Link href="https://www.twitter.com" target="_blank">
                             <TwitterIcon
                                 fontSize="large"
-                                className="hover:shadow-md"
+                                className="hover:shadow-md hover:shadow-blue-300"
                             />
                         </Link>
                     </Grid>
@@ -91,16 +91,18 @@ function Login() {
                         <Link href="https://www.instagram.com" target="_blank">
                             <InstagramIcon
                                 fontSize="large"
-                                className="hover:shadow-md"
+                                className="hover:shadow-md hover:shadow-blue-300"
                             />
                         </Link>
                     </Grid>
                 </Grid>
                 <Typography className="text-center">
                     Doesn't have an account?{" "}
+                    <Link to={"/signup"}>
                     <span className="cursor-pointer hover:underline">
                         Click here
                     </span>
+                    </Link>
                 </Typography>
                 <Typography className="text-center cursor-pointer hover:underline">
                     Forgot Password

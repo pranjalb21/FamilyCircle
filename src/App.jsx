@@ -6,6 +6,7 @@ import ProfilePage from "./pages/ProfilePage";
 import SubscriberPage from "./pages/SubscriberPage";
 import VideoPage from "./pages/VideoPage";
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <LoginPage />,
+    },
+    {
+        path: "/signup",
+        element: <SignupPage />,
     },
 ]);
 export default function App() {

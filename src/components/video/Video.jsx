@@ -22,7 +22,7 @@ export default function Video({ video }) {
                     <p>Channel Name</p>
                 </div>
                 <div className="flex gap-4 md:ml-20 ml-auto items-end mr-5">
-                    <div className="flex items-center w-20 bg-gray-400 px-2 py-1">
+                    <div className="flex items-center w-20 px-2 py-1">
                         {like ? (
                             <BiSolidLike
                                 className="inline-block w-10 hover:text-2xl text-xl duration-300 cursor-pointer"
@@ -36,7 +36,7 @@ export default function Video({ video }) {
                         )}{" "}
                         <span>100</span>
                     </div>
-                    <div className="flex items-center w-20 bg-gray-400 px-2 py-1">
+                    <div className="flex items-center w-20 px-2 py-1">
                         <FaRegComment className="inline-block w-10 hover:text-xl duration-300 cursor-pointer" />{" "}
                         <span>100</span>
                     </div>

@@ -79,7 +79,7 @@ export default function Home() {
     return (
         <div className="flex flex-col w-full">
             <TopBar />
-            <div className="bg-gray-50 flex sm:flex-row w-full sm:flex-wrap flex-col sm:justify-center sm:items-start items-center p-4 gap-3 pb-10">
+            <div className="bg-gray-50 flex sm:flex-row w-full sm:flex-wrap flex-col sm:justify-center sm:items-start items-center p-4 gap-3 pb-20">
                 {posts.map((post) => (
                     <VideoCard post={post} key={post._id} />
                 ))}
