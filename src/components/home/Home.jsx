@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import dummyImage from "../../assets/DummyPost.jpg";
 import userImage from "../../assets/user.jpg";
 import VideoCard from "../card/VideoCard";
 import TopBar from "../navbar/TopBar";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    allVideos,
+    imagePage,
+    setVideoPage,
+    setVideos,
+    tweetPage,
+    videoPage,
+} from "../../store/postSlice";
+import AllVideoPage from "../../pages/AllVideoPage";
+import AllImagePage from "../../pages/AllImagePage";
+import AllTweetPage from "../../pages/AllTweetPage";
 
 export default function Home() {
+    const dispatch = useDispatch();
+    const video = useSelector(videoPage);
+    const image = useSelector(imagePage);
+    const tweet = useSelector(tweetPage);
     const posts = [
         {
             _id: 1,
@@ -62,7 +79,7 @@ export default function Home() {
             },
         },
         {
-            _id: 2,
+            _id: 5,
             thumbnail:
                 "http://res.cloudinary.com/dw0vujhhh/image/upload/v1721157733/xbrurwmasw1e3xojhvwq.png",
             title: "Title",
@@ -76,14 +93,22 @@ export default function Home() {
             },
         },
     ];
+    const fetchVideos = async () => {
+        axios
+            .get("videos/all")
+            .then((res) => {
+                dispatch(setVideos(res.data.data));
+            })
+            .catch((err) => console.log(err.response));
+    };
+    useEffect(() => {
+        fetchVideos();
+        dispatch(setVideoPage());
+    }, []);
     return (
         <div className="flex flex-col w-full">
             <TopBar />
-            <div className="bg-gray-50 flex sm:flex-row w-full sm:flex-wrap flex-col sm:justify-center sm:items-start items-center p-4 gap-3 pb-20">
-                {posts.map((post) => (
-                    <VideoCard post={post} key={post._id} />
-                ))}
-            </div>
+            {video ? <AllVideoPage /> : image ? <AllImagePage /> : <AllTweetPage />}
         </div>
     );
 }

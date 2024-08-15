@@ -37,6 +37,10 @@ const errorMsg = {
         typeValidation: "Please select an image.",
         required:"Please select an Avatar for your profile."
     },
+    userNameOrEmail:{
+        length: "Username or email must be atleast 3 characters.",
+        required: "Please enter an username or email.",
+    }
 };
 
 export default errorMsg;

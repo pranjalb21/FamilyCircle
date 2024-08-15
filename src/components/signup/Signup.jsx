@@ -22,6 +22,7 @@ import errorMsg from "../../config/errorMessage";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -45,6 +46,7 @@ const ACCEPTED_IMAGE_TYPES = [
 export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const navigate = useNavigate();
     const registerSchema = z
         .object({
             userName: z
@@ -112,6 +114,7 @@ export default function Signup() {
         const result = await axios
             .post("http://localhost:3000/api/v1/users/register", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
+                withCredentials: true,
             })
             .then((res) => res.data)
             .then((data) => data)
@@ -138,6 +141,7 @@ export default function Signup() {
                             name="userName"
                             {...register("userName")}
                             error={errors.userName}
+                            autoFocus
                         />
                         {errors.userName && (
                             <p className="text-orange-500">
@@ -262,6 +266,13 @@ export default function Signup() {
                 </div>
                 <div className="flex gap-4">
                     <Button
+                        onClick={() => navigate("/")}
+                        variant="contained"
+                        color="error"
+                    >
+                        Cancel
+                    </Button>
+                    <Button
                         onClick={() => reset()}
                         variant="contained"
                         color="warning"
@@ -273,7 +284,7 @@ export default function Signup() {
                         variant="contained"
                         color="success"
                         disabled={isSubmitting}
-                        sx={{width:100}}
+                        sx={{ width: 100 }}
                     >
                         {isSubmitting ? (
                             <CircularProgress size={20} color="inherit" />
