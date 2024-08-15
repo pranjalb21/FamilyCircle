@@ -121,6 +121,8 @@ export default function Signup() {
             .catch((error) => error.response.data);
         if (result.success) {
             toast.success(result.message);
+            localStorage.setItem("accessToken",result.data.token)
+            navigate("/")
             reset();
         } else {
             toast.error(result.message);
