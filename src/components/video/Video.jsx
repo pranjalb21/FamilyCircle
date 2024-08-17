@@ -35,6 +35,9 @@ export default function Video() {
     useEffect(() => {
         fetchVideo(videoId);
     }, []);
+    useEffect(() => {
+        if (video) document.title = `FamilyCircle | ${video.title}`;
+    }, [video]);
     if (!video) {
         return <p>Video not found</p>;
     } else

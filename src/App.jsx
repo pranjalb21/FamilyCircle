@@ -11,37 +11,42 @@ import axios from "axios";
 import Logout from "./components/logout/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedInUser, login } from "./store/authSlice";
+import AddPostPage from "./pages/AddPostPage";
 
 axios.defaults.baseURL = "http://localhost:3000/api/v1/";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <HomePage />,
+        element: <HomePage title="Home" />,
     },
     {
         path: "/about",
-        element: <AboutPage />,
+        element: <AboutPage title="About" />,
     },
     {
         path: "/profile",
-        element: <ProfilePage />,
+        element: <ProfilePage title="Profile" />,
     },
     {
         path: "/subscribers",
-        element: <SubscriberPage />,
+        element: <SubscriberPage title="Subscriber" />,
     },
     {
         path: "/:videoId",
-        element: <VideoPage />,
+        element: <VideoPage title="Video" />,
     },
     {
         path: "/login",
-        element: <LoginPage />,
+        element: <LoginPage title="Login" />,
     },
     {
         path: "/signup",
-        element: <SignupPage />,
+        element: <SignupPage title="Sign Up" />,
+    },
+    {
+        path:"/add-post",
+        element:<AddPostPage title="Add Post" />
     },
     {
         path: "/logout",
