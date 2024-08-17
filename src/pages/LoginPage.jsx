@@ -6,14 +6,16 @@ import { userLoginStatus } from "../store/authSlice";
 import HomePage from "./HomePage";
 import { Navigate } from "react-router-dom";
 
-export default function LoginPage({title}) {
+export default function LoginPage({ title }) {
     const userStatus = useSelector(userLoginStatus);
-    useEffect(()=>{document.title=`FamilyCircle | ${title}`},[])
-    return userStatus ? (
-        <Navigate to={"/"} />
-    ) : (
+    useEffect(() => {
+        document.title = `FamilyCircle | ${title}`;
+    }, []);
+    return !userStatus ? (
         <Container>
             <Login />
         </Container>
+    ) : (
+        <Navigate to={"/"} />
     );
 }

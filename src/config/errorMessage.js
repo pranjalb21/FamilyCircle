@@ -40,7 +40,33 @@ const errorMsg = {
     userNameOrEmail:{
         length: "Username or email must be atleast 3 characters.",
         required: "Please enter an username or email.",
-    }
+    },
+    title:{
+        length: "Title must be atleast 3 characters.",
+        required: "Please enter video title.",
+    },
+    description:{
+        length: "Description must be atleast 3 characters.",
+        required: "Please enter video description.",
+    },
+    thumbnail: {
+        sizeValidation: "Thumbnail size should not be more than 10MB",
+        typeValidation: "Please select a thumbnail.",
+        required:"Thumbnail is required."
+    },
+    video: {
+        typeValidation: "Please select a video.",
+        required:"Video is required"
+    },
+    content:{
+        length: "Tweet must be atleast 3 characters.",
+        required: "Please type something to post.",
+    },
+    image: {
+        sizeValidation: "Image size should not be more than 10MB",
+        typeValidation: "Please select a Image.",
+        required:"Image is required."
+    },
 };
 
 export default errorMsg;
