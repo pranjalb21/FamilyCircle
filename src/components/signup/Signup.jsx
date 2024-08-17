@@ -23,6 +23,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { MdPostAdd } from "react-icons/md";
+import { MdOutlineCancel } from "react-icons/md";
+import { GrPowerReset } from "react-icons/gr";
+import { IoSend } from "react-icons/io5";
+import { BiImageAdd } from "react-icons/bi";
 
 const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -247,9 +252,9 @@ export default function Signup() {
                             variant="contained"
                             tabIndex={-1}
                             color={errors.avatar ? "error" : "primary"}
-                            startIcon={<CloudUploadIcon />}
+                            startIcon={<BiImageAdd />}
                         >
-                            Upload file
+                            Upload avatar
                             <VisuallyHiddenInput
                                 type="file"
                                 name="avatar"
@@ -271,28 +276,39 @@ export default function Signup() {
                         onClick={() => navigate("/")}
                         variant="contained"
                         color="error"
+                        sx={{ width: 110 }}
                     >
-                        Cancel
+                        Cancel{" "}
+                        <span>
+                            <MdOutlineCancel className="font-extrabold text-xl ml-1" />
+                        </span>
                     </Button>
                     <Button
                         onClick={() => reset()}
                         variant="contained"
                         color="warning"
+                        sx={{ width: 110 }}
                     >
-                        Reset
+                        Reset{" "}
+                        <span>
+                            <GrPowerReset className="font-extrabold text-xl ml-1" />
+                        </span>
                     </Button>
                     <Button
                         type="submit"
                         variant="contained"
                         color="success"
                         disabled={isSubmitting}
-                        sx={{ width: 100 }}
+                        sx={{ width: 110 }}
                     >
                         {isSubmitting ? (
                             <CircularProgress size={20} color="inherit" />
                         ) : (
                             "Register"
-                        )}
+                        )}{" "}
+                        <span>
+                            <MdPostAdd className="font-extrabold text-xl ml-1" />
+                        </span>
                     </Button>
                 </div>
             </form>

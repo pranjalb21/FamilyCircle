@@ -17,6 +17,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineCancel } from "react-icons/md";
+import { GrPowerReset } from "react-icons/gr";
+import { IoSend } from "react-icons/io5";
 
 const VisuallyHiddenInput = styled("input")({
     clip: "rect(0 0 0 0)",
@@ -133,17 +136,23 @@ export default function AddImage() {
                         onClick={() => navigate("/")}
                         variant="contained"
                         color="error"
-                        sx={{ width: 80 }}
+                        sx={{ width: 100 }}
                     >
-                        Cancel
+                        Cancel{" "}
+                        <span>
+                            <MdOutlineCancel className="font-extrabold text-xl ml-1" />
+                        </span>
                     </Button>
                     <Button
                         onClick={() => reset()}
                         variant="contained"
                         color="warning"
-                        sx={{ width: 80 }}
+                        sx={{ width: 100 }}
                     >
-                        Reset
+                        Reset{" "}
+                        <span>
+                            <GrPowerReset className="font-extrabold text-xl ml-1" />
+                        </span>
                     </Button>
                     <Button
                         type="submit"
@@ -156,7 +165,10 @@ export default function AddImage() {
                             <CircularProgress size={20} color="inherit" />
                         ) : (
                             "Post"
-                        )}
+                        )}{" "}
+                        <span>
+                            <IoSend className="font-extrabold text-xl ml-1" />
+                        </span>
                     </Button>
                 </div>
             </form>

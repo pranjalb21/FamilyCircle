@@ -1,12 +1,10 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import {
-    Button,
-    CircularProgress,
-    TextField,
-    Typography,
-} from "@mui/material";
+import { Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { BiImageAdd } from "react-icons/bi";
 import { RiVideoAddLine } from "react-icons/ri";
+import { GrPowerReset } from "react-icons/gr";
+import { MdOutlineCancel } from "react-icons/md";
+import { IoSend } from "react-icons/io5";
 
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
@@ -38,45 +36,40 @@ const ACCEPTED_IMAGE_TYPES = [
     "image/png",
     "image/webp",
 ];
-const ACCEPTED_VIDEO_TYPES = [
-    "video/mp4",
-    "video/mkv",
-    "video/mpg",
-];
+const ACCEPTED_VIDEO_TYPES = ["video/mp4", "video/mkv", "video/mpg"];
 
 export default function AddVideo() {
     const navigate = useNavigate();
-    const videoSchema = z
-        .object({
-            title: z
-                .string({ message: errorMsg.title.required })
-                .trim()
-                .min(3, { message: errorMsg.title.length }),
-            description: z
-                .string({ message: errorMsg.description.required })
-                .trim()
-                .min(3, { message: errorMsg.description.length }),
-            thumbnail: z
-                .any()
-                .refine(
-                    (files) => files?.[0]?.size > 0,
-                    errorMsg.thumbnail.required
-                )
-                .refine(
-                    (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-                    `Max image size is 5MB.`
-                )
-                .refine(
-                    (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-                    "Only .jpg, .jpeg, .png and .webp formats are supported."
-                ),
-            video: z
-                .any()
-                .refine(
-                    (files) => ACCEPTED_VIDEO_TYPES.includes(files?.[0]?.type),
-                    "Please select a video."
-                ),
-        })
+    const videoSchema = z.object({
+        title: z
+            .string({ message: errorMsg.title.required })
+            .trim()
+            .min(3, { message: errorMsg.title.length }),
+        description: z
+            .string({ message: errorMsg.description.required })
+            .trim()
+            .min(3, { message: errorMsg.description.length }),
+        thumbnail: z
+            .any()
+            .refine(
+                (files) => files?.[0]?.size > 0,
+                errorMsg.thumbnail.required
+            )
+            .refine(
+                (files) => files?.[0]?.size <= MAX_FILE_SIZE,
+                `Max image size is 5MB.`
+            )
+            .refine(
+                (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+                "Only .jpg, .jpeg, .png and .webp formats are supported."
+            ),
+        video: z
+            .any()
+            .refine(
+                (files) => ACCEPTED_VIDEO_TYPES.includes(files?.[0]?.type),
+                "Please select a video."
+            ),
+    });
     const {
         register,
         handleSubmit,
@@ -96,7 +89,8 @@ export default function AddVideo() {
     const onSubmit = async (values) => {
         const formData = new FormData();
         for (const [key, value] of Object.entries(values)) {
-            if (key === "thumbnail" || key ==="video") formData.append(key, value[0]);
+            if (key === "thumbnail" || key === "video")
+                formData.append(key, value[0]);
             else formData.append(key, value);
         }
         const result = await axios
@@ -210,17 +204,23 @@ export default function AddVideo() {
                         onClick={() => navigate("/")}
                         variant="contained"
                         color="error"
-                        sx={{ width: 80 }}
+                        sx={{ width: 100 }}
                     >
-                        Cancel
+                        Cancel{" "}
+                        <span>
+                            <MdOutlineCancel className="font-extrabold text-xl ml-1" />
+                        </span>
                     </Button>
                     <Button
                         onClick={() => reset()}
                         variant="contained"
                         color="warning"
-                        sx={{ width: 80 }}
+                        sx={{ width: 100 }}
                     >
-                        Reset
+                        Reset{" "}
+                        <span>
+                            <GrPowerReset className="font-extrabold text-xl ml-1" />
+                        </span>
                     </Button>
                     <Button
                         type="submit"
@@ -233,7 +233,10 @@ export default function AddVideo() {
                             <CircularProgress size={20} color="inherit" />
                         ) : (
                             "Post"
-                        )}
+                        )}{" "}
+                        <span>
+                            <IoSend className="font-extrabold text-xl ml-1" />
+                        </span>
                     </Button>
                 </div>
             </form>
