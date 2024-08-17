@@ -49,22 +49,5 @@ const router = createBrowserRouter([
     },
 ]);
 export default function App() {
-    const user = useSelector(loggedInUser);
-    const dispatch = useDispatch();
-    const handleLoad = async () => {
-        const token = localStorage.getItem("accessToken");
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        if (!user) {
-            const result = await axios
-                .get("users/current", { withCredentials: true })
-                .then((res) =>
-                    dispatch(login({ user: res.data.data, accessToken: token }))
-                )
-                .catch((error) => console.log(error.response));
-        }
-    };
-    useEffect(() => {
-        handleLoad();
-    }, [user]);
     return <RouterProvider router={router} />;
 }
