@@ -6,21 +6,22 @@ import { Avatar } from "@mui/material";
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa6";
 
-export default function TweetCard() {
+export default function TweetCard({ post }) {
     const [showMore, setShowMore] = useState(false);
-    const post = {
-        content:
-            "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae, minima reprehenderit. Temporibus molestias rerum fugiat distinctio numquam eaque quo et amet perferendis, repellat dolores ex quis, iste pariatur? Cumque deleniti, laudantium repudiandae, provident excepturi molestiae sunt minima eum voluptatum numquam aut est! Corrupti fuga ipsum quidem laborum voluptatem, voluptates dolores itaque eligendi suscipit amet sunt neque placeat ducimus expedita tempora, quod rem hic vel aliquam facilis minima quasi! Quia harum sapiente, nisi officia illo earum facere porro velit. Est esse quaerat odio quis, maxime officiis aliquid ex optio alias autem, beatae dicta eaque placeat. Eligendi voluptate consequatur nisi tenetur distinctio!",
-        likesCount: 10,
-        commentsCount: 20,
-        owner: {
-            fullName: "Abc",
-            userName: "username",
-            avatar: userImage,
-        },
-        isLiked: false,
-        createdAt: "2024-07-16T19:01:25.203+00:00",
-    };
+    // const post = {
+    //     content:
+    //         "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae, minima reprehenderit. Temporibus molestias rerum fugiat distinctio numquam eaque quo et amet perferendis, repellat dolores ex quis, iste pariatur? Cumque deleniti, laudantium repudiandae, provident excepturi molestiae sunt minima eum voluptatum numquam aut est! Corrupti fuga ipsum quidem laborum voluptatem, voluptates dolores itaque eligendi suscipit amet sunt neque placeat ducimus expedita tempora, quod rem hic vel aliquam facilis minima quasi! Quia harum sapiente, nisi officia illo earum facere porro velit. Est esse quaerat odio quis, maxime officiis aliquid ex optio alias autem, beatae dicta eaque placeat. Eligendi voluptate consequatur nisi tenetur distinctio!",
+    //     likesCount: 10,
+    //     commentsCount: 20,
+    //     owner: {
+    //         fullName: "Abc",
+    //         userName: "username",
+    //         avatar: userImage,
+    //     },
+    //     isLiked: false,
+    //     createdAt: "2024-07-16T19:01:25.203+00:00",
+    // };
+
     const getTime = (time) => {
         const mongoTime = new Date(time);
         const currTime = new Date();
@@ -51,7 +52,7 @@ export default function TweetCard() {
                 <Avatar src={post.owner.avatar} />
                 <div>
                     <p className="text-md hover:underline inline">
-                        {post.owner.userName}
+                        {post.owner.fullName}
                         {" • "}
                         <span className="text-sm">
                             {getTime(post.createdAt)}
@@ -61,10 +62,19 @@ export default function TweetCard() {
                 </div>
             </div>
             <div className="relative h-72 box-border overflow-hidden">
-                <p className={`px-4 overflow-auto h-48`}>
-                    {showMore ? post.content : post.content.slice(0, 240)}{" "}
-                    <span className="text-blue-500 cursor-pointer" onClick={()=>setShowMore(!showMore)}>{showMore?"...less":"...more"}</span>
-                </p>
+                {post.content.length > 100 ? (
+                    <p className={`px-4 overflow-auto h-48`}>
+                        {showMore ? post.content : post.content.slice(0, 240)}{" "}
+                        <span
+                            className="text-blue-500 cursor-pointer"
+                            onClick={() => setShowMore(!showMore)}
+                        >
+                            {showMore ? "...less" : "...more"}
+                        </span>
+                    </p>
+                ) : (
+                    <p className={`px-4 overflow-auto h-48`}>{post.content}</p>
+                )}
             </div>
             <div className="flex gap-4 justify-start  items-center">
                 <div className="flex items-center w-20 px-2 py-1">

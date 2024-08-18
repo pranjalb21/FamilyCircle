@@ -10,7 +10,16 @@ import VideoCard from "../card/VideoCard";
 import userImage from "../../assets/user.jpg";
 import TopBar from "../navbar/TopBar";
 import { useDispatch, useSelector } from "react-redux";
-import { allVideos, imagePage, setVideoPage, setVideos, tweetPage, videoPage } from "../../store/postSlice";
+import {
+    allVideos,
+    imagePage,
+    setImages,
+    setTweets,
+    setVideoPage,
+    setVideos,
+    tweetPage,
+    videoPage,
+} from "../../store/postSlice";
 import { loggedInUser } from "../../store/authSlice";
 import { toast } from "react-toastify";
 import AllVideoPage from "../../pages/AllVideoPage";
@@ -106,7 +115,7 @@ function Profile() {
             })
             .catch((err) => console.log(err.response));
     };
-    const fetchVideos = async () => {
+    const fetchUserVideos = async () => {
         axios
             .get(`videos/user/${user._id}`)
             .then((res) => {
@@ -114,9 +123,27 @@ function Profile() {
             })
             .catch((err) => console.log(err.response));
     };
+    const fetchUserImages = async () => {
+        axios
+            .get(`images/user/${user._id}`)
+            .then((res) => {
+                dispatch(setImages(res.data.data));
+            })
+            .catch((err) => console.log(err.response));
+    };
+    const fetchUserTweets = async () => {
+        axios
+            .get(`tweets/user/${user._id}`)
+            .then((res) => {
+                dispatch(setTweets(res.data.data));
+            })
+            .catch((err) => console.log(err.response));
+    };
     useEffect(() => {
         dispatch(setVideoPage());
-        fetchVideos();
+        fetchUserVideos();
+        fetchUserImages();
+        fetchUserTweets();
         fetchUserChannel(user.userName);
     }, []);
     return userChannel ? (
@@ -150,7 +177,13 @@ function Profile() {
                 </div>
             </div>
             <TopBar />
-            {video ? <AllVideoPage /> : image ? <AllImagePage /> : <AllTweetPage />}
+            {video ? (
+                <AllVideoPage />
+            ) : image ? (
+                <AllImagePage />
+            ) : (
+                <AllTweetPage />
+            )}
         </div>
     ) : (
         <div className=" w-full">No user found</div>

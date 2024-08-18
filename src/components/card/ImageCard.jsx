@@ -6,19 +6,20 @@ import { Avatar } from "@mui/material";
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa6";
 
-export default function ImageCard() {
-    const post = {
-        image: dummyImage,
-        likesCount: 10,
-        commentsCount: 20,
-        owner: {
-            fullName: "Abc",
-            userName: "username",
-            avatar: userImage,
-        },
-        isLiked:false,
-        createdAt: "2024-07-16T19:01:25.203+00:00",
-    };
+export default function ImageCard({post}) {
+    // const post = {
+    //     image: dummyImage,
+    //     likesCount: 10,
+    //     commentsCount: 20,
+    //     owner: {
+    //         fullName: "Abc",
+    //         userName: "username",
+    //         avatar: userImage,
+    //     },
+    //     isLiked:false,
+    //     createdAt: "2024-07-16T19:01:25.203+00:00",
+    // };
+    
     const getTime = (time) => {
         const mongoTime = new Date(time);
         const currTime = new Date();

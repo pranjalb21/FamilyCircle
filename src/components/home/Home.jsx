@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     allVideos,
     imagePage,
+    setImages,
+    setTweets,
     setVideoPage,
     setVideos,
     tweetPage,
@@ -101,14 +103,38 @@ export default function Home() {
             })
             .catch((err) => console.log(err.response));
     };
+    const fetchImages = async () => {
+        axios
+            .get("images/all")
+            .then((res) => {
+                dispatch(setImages(res.data.data));
+            })
+            .catch((err) => console.log(err.response));
+    };
+    const fetchTweets = async () => {
+        axios
+            .get("tweets/all")
+            .then((res) => {
+                dispatch(setTweets(res.data.data));
+            })
+            .catch((err) => console.log(err.response));
+    };
     useEffect(() => {
         fetchVideos();
+        fetchImages();
+        fetchTweets();
         dispatch(setVideoPage());
     }, []);
     return (
         <div className="flex flex-col w-full">
             <TopBar />
-            {video ? <AllVideoPage /> : image ? <AllImagePage /> : <AllTweetPage />}
+            {video ? (
+                <AllVideoPage />
+            ) : image ? (
+                <AllImagePage />
+            ) : (
+                <AllTweetPage />
+            )}
         </div>
     );
 }

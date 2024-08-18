@@ -57,6 +57,7 @@ export default function Video() {
                         <h1>{video.title}</h1>
                         <p>{video.owner.userName}</p>
                     </div>
+                    <div></div>
                     <div className="flex gap-4 md:ml-20 ml-auto items-end mr-5">
                         <div className="flex items-center w-20 px-2 py-1">
                             {video.isLiked ? (
