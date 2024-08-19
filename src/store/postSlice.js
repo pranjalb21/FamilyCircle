@@ -46,6 +46,39 @@ const postSlice = createSlice({
             state.tweetPage = false;
             state.videoPage = false;
         },
+        toggleTweetLike: (state, action) => {
+            const index = state.tweets.docs.findIndex(
+                (tweet) => tweet._id === action.payload.id
+            );
+            state.tweets.docs[index] = {
+                ...state.tweets.docs[index],
+                isLiked: !state.tweets.docs[index].isLiked,
+            };
+            state.tweets.docs[index].likesCount =
+                state.tweets.docs[index].likesCount + Number(action.payload.likeValue);
+        },
+        toggleImageLike: (state, action) => {
+            const index = state.images.docs.findIndex(
+                (image) => image._id === action.payload.id
+            );
+            state.images.docs[index] = {
+                ...state.images.docs[index],
+                isLiked: !state.images.docs[index].isLiked,
+            };
+            state.images.docs[index].likesCount =
+                state.images.docs[index].likesCount + Number(action.payload.likeValue);
+        },
+        toggleVideoLike: (state, action) => {
+            const index = state.videos.docs.findIndex(
+                (video) => video._id === action.payload.id
+            );
+            state.videos.docs[index] = {
+                ...state.videos.docs[index],
+                isLiked: !state.videos.docs[index].isLiked,
+            };
+            state.videos.docs[index].likesCount =
+                state.videos.docs[index].likesCount + Number(action.payload.likeValue);
+        },
     },
 });
 
@@ -59,6 +92,9 @@ export const {
     setImagePage,
     setTweetPage,
     setVideoPage,
+    toggleImageLike,
+    toggleTweetLike,
+    toggleVideoLike,
 } = postSlice.actions;
 export const allVideos = (state) => state.post.videos;
 export const allTweets = (state) => state.post.tweets;

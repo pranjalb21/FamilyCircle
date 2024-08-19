@@ -1,15 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout";
 import TweetCard from "../components/card/TweetCard";
-import { useSelector } from "react-redux";
-import { allTweets } from "../store/postSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { allTweets, setTweets } from "../store/postSlice";
 import { Pagination, Stack } from "@mui/material";
+import { loggedInUser } from "../store/authSlice";
+import axios from "axios";
 
-export default function AllTweetPage() {
+export default function AllTweetPage({profile=false}) {
     const tweets = useSelector(allTweets);
+    const user = useSelector(loggedInUser)
+    const dispatch = useDispatch();
+    const [page, setPage] = useState(1);
+    const fetchTweets = async (page) => {
+        await axios
+            .get(`tweets/all/?page=${page}`)
+            .then((res) => {
+                dispatch(setTweets(res.data.data));
+            })
+            .catch((err) => console.log(err.response));
+    };
+    const fetchUserTweets=async(page)=>{
+        await axios
+            .get(`tweets/user/${user?._id}/?page=${page}`)
+            .then((res) => {
+                dispatch(setTweets(res.data.data));
+            })
+            .catch((err) => console.log(err.response));
+    }
+    useEffect(() => {
+        if (!profile) {
+            fetchTweets(page);
+        }else{
+            fetchUserTweets(page)
+        }
+    }, [page]);
+    const handleChange = (event, value) => {
+        setPage(value);
+    };
     return (
         <div className="flex flex-col">
-            <div className=" flex sm:flex-row w-full sm:flex-wrap flex-col sm:justify-center sm:items-start items-center p-4 gap-3 pb-20">
+            <div className=" flex sm:flex-row w-full sm:flex-wrap flex-col sm:items-start items-center p-4 gap-3 pb-20">
                 {tweets?.totalDocs > 0 ? (
                     tweets.docs.map((tweet) => (
                         <TweetCard key={tweet._id} post={tweet} />
@@ -21,6 +52,7 @@ export default function AllTweetPage() {
             <Stack spacing={2} className="self-center">
                 <Pagination
                     count={Math.ceil(tweets?.totalDocs / tweets.limit)}
+                    onChange={handleChange}
                 />
             </Stack>
         </div>

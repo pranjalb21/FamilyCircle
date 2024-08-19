@@ -5,8 +5,13 @@ import userImage from "../../assets/user.jpg";
 import { Avatar } from "@mui/material";
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa6";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { toggleImageLike } from "../../store/postSlice";
+import { toast } from "react-toastify";
 
-export default function ImageCard({post}) {
+export default function ImageCard({ post }) {
+    const dispatch = useDispatch();
     // const post = {
     //     image: dummyImage,
     //     likesCount: 10,
@@ -19,7 +24,14 @@ export default function ImageCard({post}) {
     //     isLiked:false,
     //     createdAt: "2024-07-16T19:01:25.203+00:00",
     // };
-    
+    const toggleLike = async (id, likeValue) => {
+        await axios
+            .post(`likes/image/${id}`)
+            .then((res) => {
+                dispatch(toggleImageLike({ id, likeValue }));
+            })
+            .catch((err) => console.log(err));
+    };
     const getTime = (time) => {
         const mongoTime = new Date(time);
         const currTime = new Date();
@@ -67,15 +79,15 @@ export default function ImageCard({post}) {
             </div>
             <div className="flex gap-4 justify-start  items-center">
                 <div className="flex items-center w-20 px-2 py-1">
-                    {post.isLiked ? (
+                    {post?.isLiked ? (
                         <BiSolidLike
                             className="inline-block w-10 hover:text-2xl text-xl duration-300 cursor-pointer"
-                            // onClick={() => toggleLike(videoId)}
+                            onClick={() => toggleLike(post?._id, -1)}
                         />
                     ) : (
                         <BiLike
                             className="inline-block w-10 hover:text-2xl text-xl duration-300 cursor-pointer"
-                            // onClick={() => toggleLike(videoId)}
+                            onClick={() => toggleLike(post?._id, 1)}
                         />
                     )}{" "}
                     <span>{post.likesCount}</span>

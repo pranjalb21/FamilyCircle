@@ -8,6 +8,7 @@ import { BiLike, BiSolidLike } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { toggleVideoLike } from "../../store/postSlice";
 
 export default function Video() {
     const { videoId } = useParams();
@@ -28,7 +29,7 @@ export default function Video() {
         axios
             .post(`likes/video/${id}`)
             .then((res) => {
-                fetchVideo(id);
+                setVideo((prev) => ({ ...prev, isLiked: !prev.isLiked }));
             })
             .catch((err) => toast.error(err.response.data.message));
     };
@@ -60,7 +61,7 @@ export default function Video() {
                     <div></div>
                     <div className="flex gap-4 md:ml-20 ml-auto items-end mr-5">
                         <div className="flex items-center w-20 px-2 py-1">
-                            {video.isLiked ? (
+                            {video?.isLiked ? (
                                 <BiSolidLike
                                     className="inline-block w-10 hover:text-2xl text-xl duration-300 cursor-pointer"
                                     onClick={() => toggleLike(videoId)}

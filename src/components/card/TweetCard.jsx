@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 
-import dummyImage from "../../assets/DummyPost.jpg";
-import userImage from "../../assets/user.jpg";
 import { Avatar } from "@mui/material";
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
+import { toggleTweetLike } from "../../store/postSlice";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function TweetCard({ post }) {
     const [showMore, setShowMore] = useState(false);
+    const dispatch = useDispatch();
     // const post = {
     //     content:
     //         "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vitae, minima reprehenderit. Temporibus molestias rerum fugiat distinctio numquam eaque quo et amet perferendis, repellat dolores ex quis, iste pariatur? Cumque deleniti, laudantium repudiandae, provident excepturi molestiae sunt minima eum voluptatum numquam aut est! Corrupti fuga ipsum quidem laborum voluptatem, voluptates dolores itaque eligendi suscipit amet sunt neque placeat ducimus expedita tempora, quod rem hic vel aliquam facilis minima quasi! Quia harum sapiente, nisi officia illo earum facere porro velit. Est esse quaerat odio quis, maxime officiis aliquid ex optio alias autem, beatae dicta eaque placeat. Eligendi voluptate consequatur nisi tenetur distinctio!",
@@ -22,6 +25,14 @@ export default function TweetCard({ post }) {
     //     createdAt: "2024-07-16T19:01:25.203+00:00",
     // };
 
+    const toggleLike = async (id, likeValue) => {
+        await axios
+            .post(`likes/tweet/${id}`)
+            .then((res) => {
+                dispatch(toggleTweetLike({ id, likeValue }));
+            })
+            .catch((err) => toast.error(err.response.data.message));
+    };
     const getTime = (time) => {
         const mongoTime = new Date(time);
         const currTime = new Date();
@@ -81,12 +92,12 @@ export default function TweetCard({ post }) {
                     {post.isLiked ? (
                         <BiSolidLike
                             className="inline-block w-10 hover:text-2xl text-xl duration-300 cursor-pointer"
-                            // onClick={() => toggleLike(videoId)}
+                            onClick={() => toggleLike(post?._id, -1)}
                         />
                     ) : (
                         <BiLike
                             className="inline-block w-10 hover:text-2xl text-xl duration-300 cursor-pointer"
-                            // onClick={() => toggleLike(videoId)}
+                            onClick={() => toggleLike(post?._id, 1)}
                         />
                     )}{" "}
                     <span>{post.likesCount}</span>

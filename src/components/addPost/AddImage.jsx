@@ -74,10 +74,7 @@ export default function AddImage() {
     });
     const onSubmit = async (values) => {
         const formData = new FormData();
-        for (const [key, value] of Object.entries(values)) {
-            if (key === "image") formData.append(key, value[0]);
-            else formData.append(key, value);
-        }
+        // formData.append("image",values?.image[0])
         const result = await axios
             .post("http://localhost:3000/api/v1/users/register", formData, {
                 headers: { "Content-Type": "multipart/form-data" },

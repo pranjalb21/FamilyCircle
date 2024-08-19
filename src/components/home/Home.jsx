@@ -96,7 +96,7 @@ export default function Home() {
         },
     ];
     const fetchVideos = async () => {
-        axios
+        await axios
             .get("videos/all")
             .then((res) => {
                 dispatch(setVideos(res.data.data));
@@ -104,7 +104,7 @@ export default function Home() {
             .catch((err) => console.log(err.response));
     };
     const fetchImages = async () => {
-        axios
+        await axios
             .get("images/all")
             .then((res) => {
                 dispatch(setImages(res.data.data));
@@ -112,7 +112,7 @@ export default function Home() {
             .catch((err) => console.log(err.response));
     };
     const fetchTweets = async () => {
-        axios
+        await axios
             .get("tweets/all")
             .then((res) => {
                 dispatch(setTweets(res.data.data));

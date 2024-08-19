@@ -63,11 +63,7 @@ export default function TopBar() {
             <div className="flex justify-center items-center hover:font-extrabold w-20 sm:w-28 ml-auto">
                 <Tooltip title="Add post" placement="bottom-end">
                     <BsPlusSquare
-                        className={`hover:text-3xl duration-200 sm:hover:text-4xl cursor-pointer  ${
-                            tweet
-                                ? "text-3xl sm:text-4xl font-bold"
-                                : "text-2xl sm:text-3xl"
-                        }`}
+                        className={`hover:text-3xl duration-200 sm:hover:text-4xl cursor-pointer`}
                         onClick={() => {
                             dispatch(setVideoPage());
                             navigate("/add-post");

@@ -178,11 +178,11 @@ function Profile() {
             </div>
             <TopBar />
             {video ? (
-                <AllVideoPage />
+                <AllVideoPage profile={true} />
             ) : image ? (
-                <AllImagePage />
+                <AllImagePage profile={true} />
             ) : (
-                <AllTweetPage />
+                <AllTweetPage profile={true} />
             )}
         </div>
     ) : (
