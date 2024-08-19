@@ -74,18 +74,16 @@ export default function AddImage() {
     });
     const onSubmit = async (values) => {
         const formData = new FormData();
-        // formData.append("image",values?.image[0])
+        formData.append("image",values?.image[0])
         const result = await axios
-            .post("http://localhost:3000/api/v1/users/register", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-                withCredentials: true,
+            .post("images/add", formData, {
+                headers: { "Content-Type": "multipart/form-data" }
             })
             .then((res) => res.data)
             .then((data) => data)
             .catch((error) => error.response.data);
         if (result.success) {
             toast.success(result.message);
-            localStorage.setItem("accessToken", result.data.token);
             navigate("/");
             reset();
         } else {
@@ -119,7 +117,7 @@ export default function AddImage() {
                             />
                         </Button>
                         {image !== undefined && image != null && (
-                            <p className="text-ellipsis">{image[0].name}</p>
+                            <p className="text-ellipsis text-right text-blue-600">{image[0]?.name}</p>
                         )}
                         {errors.image && (
                             <p className="text-orange-500">
@@ -134,6 +132,8 @@ export default function AddImage() {
                         variant="contained"
                         color="error"
                         sx={{ width: 100 }}
+                        className="disabled:opacity-80"
+                        disabled={isSubmitting}
                     >
                         Cancel{" "}
                         <span>
@@ -145,6 +145,8 @@ export default function AddImage() {
                         variant="contained"
                         color="warning"
                         sx={{ width: 100 }}
+                        className="disabled:opacity-80"
+                        disabled={isSubmitting}
                     >
                         Reset{" "}
                         <span>
@@ -156,6 +158,7 @@ export default function AddImage() {
                         variant="contained"
                         color="success"
                         disabled={isSubmitting}
+                        className="disabled:opacity-80"
                         sx={{ width: 80 }}
                     >
                         {isSubmitting ? (

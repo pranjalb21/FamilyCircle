@@ -94,16 +94,14 @@ export default function AddVideo() {
             else formData.append(key, value);
         }
         const result = await axios
-            .post("http://localhost:3000/api/v1/users/register", formData, {
+            .post("videos/add", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
-                withCredentials: true,
             })
             .then((res) => res.data)
             .then((data) => data)
             .catch((error) => error.response.data);
         if (result.success) {
             toast.success(result.message);
-            localStorage.setItem("accessToken", result.data.token);
             navigate("/");
             reset();
         } else {
@@ -165,7 +163,7 @@ export default function AddVideo() {
                             />
                         </Button>
                         {thumbnail !== undefined && thumbnail != null && (
-                            <p className="text-ellipsis">{thumbnail[0].name}</p>
+                            <p className="text-ellipsis text-right text-blue-600">{thumbnail[0]?.name}</p>
                         )}
                         {errors.thumbnail && (
                             <p className="text-orange-500">
@@ -190,7 +188,7 @@ export default function AddVideo() {
                             />
                         </Button>
                         {video !== undefined && video != null && (
-                            <p className="text-ellipsis">{video[0].name}</p>
+                            <p className="text-ellipsis text-right text-blue-600">{video[0]?.name}</p>
                         )}
                         {errors.video && (
                             <p className="text-orange-500">
@@ -204,6 +202,8 @@ export default function AddVideo() {
                         onClick={() => navigate("/")}
                         variant="contained"
                         color="error"
+                        className="disabled:opacity-80"
+                        disabled={isSubmitting}
                         sx={{ width: 100 }}
                     >
                         Cancel{" "}
@@ -215,7 +215,9 @@ export default function AddVideo() {
                         onClick={() => reset()}
                         variant="contained"
                         color="warning"
+                        disabled={isSubmitting}
                         sx={{ width: 100 }}
+                        className="disabled:opacity-80"
                     >
                         Reset{" "}
                         <span>
@@ -227,6 +229,7 @@ export default function AddVideo() {
                         variant="contained"
                         color="success"
                         disabled={isSubmitting}
+                        className="disabled:opacity-80"
                         sx={{ width: 80 }}
                     >
                         {isSubmitting ? (
