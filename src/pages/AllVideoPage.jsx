@@ -6,9 +6,9 @@ import axios from "axios";
 import { Pagination, Stack } from "@mui/material";
 import { loggedInUser } from "../store/authSlice";
 
-export default function AllVideoPage({ profile = false }) {
+export default function AllVideoPage({ profile = false, id }) {
     const videos = useSelector(allVideos);
-    const user = useSelector(loggedInUser)
+    const user = useSelector(loggedInUser);
     const dispatch = useDispatch();
     const [page, setPage] = useState(1);
     const fetchVideos = async (page) => {
@@ -19,19 +19,19 @@ export default function AllVideoPage({ profile = false }) {
             })
             .catch((err) => console.log(err.response));
     };
-    const fetchUserVideos=async(page)=>{
+    const fetchUserVideos = async (page, uid) => {
         await axios
-            .get(`videos/user/${user?._id}/?page=${page}`)
+            .get(`videos/user/${uid}/?page=${page}`)
             .then((res) => {
                 dispatch(setVideos(res.data.data));
             })
             .catch((err) => console.log(err.response));
-    }
+    };
     useEffect(() => {
         if (!profile) {
             fetchVideos(page);
-        }else{
-            fetchUserVideos(page)
+        } else {
+            fetchUserVideos(page, id);
         }
     }, [page]);
     const handleChange = (event, value) => {

@@ -7,9 +7,9 @@ import { Pagination, Stack } from "@mui/material";
 import { loggedInUser } from "../store/authSlice";
 import axios from "axios";
 
-export default function AllTweetPage({profile=false}) {
+export default function AllTweetPage({ profile = false, id }) {
     const tweets = useSelector(allTweets);
-    const user = useSelector(loggedInUser)
+    const user = useSelector(loggedInUser);
     const dispatch = useDispatch();
     const [page, setPage] = useState(1);
     const fetchTweets = async (page) => {
@@ -20,19 +20,19 @@ export default function AllTweetPage({profile=false}) {
             })
             .catch((err) => console.log(err.response));
     };
-    const fetchUserTweets=async(page)=>{
+    const fetchUserTweets = async (page, uid) => {
         await axios
-            .get(`tweets/user/${user?._id}/?page=${page}`)
+            .get(`tweets/user/${uid}/?page=${page}`)
             .then((res) => {
                 dispatch(setTweets(res.data.data));
             })
             .catch((err) => console.log(err.response));
-    }
+    };
     useEffect(() => {
         if (!profile) {
             fetchTweets(page);
-        }else{
-            fetchUserTweets(page)
+        } else {
+            fetchUserTweets(page, id);
         }
     }, [page]);
     const handleChange = (event, value) => {

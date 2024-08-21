@@ -3,13 +3,16 @@ import React, { useState } from "react";
 import { Avatar } from "@mui/material";
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa6";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleTweetLike } from "../../store/postSlice";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { loggedInUser } from "../../store/authSlice";
+import { Link } from "react-router-dom";
 
 export default function TweetCard({ post }) {
     const [showMore, setShowMore] = useState(false);
+    const user = useSelector(loggedInUser);
     const dispatch = useDispatch();
     // const post = {
     //     content:
@@ -62,14 +65,24 @@ export default function TweetCard({ post }) {
             <div className="flex gap-2 p-2">
                 <Avatar src={post.owner.avatar} />
                 <div>
-                    <p className="text-md hover:underline inline">
+                    <p className="text-md">
                         {post.owner.fullName}
                         {" • "}
                         <span className="text-sm">
                             {getTime(post.createdAt)}
                         </span>
                     </p>
-                    <p className="text-sm">{post.owner.fullName}</p>
+                    <p className="text-sm hover:underline cursor-pointer">
+                        <Link
+                            to={
+                                user?.userName === post.owner.userName
+                                    ? `/profile`
+                                    : `/profiles/${post.owner.userName}`
+                            }
+                        >
+                            {post.owner.userName}
+                        </Link>
+                    </p>
                 </div>
             </div>
             <div className="relative h-72 box-border overflow-hidden">

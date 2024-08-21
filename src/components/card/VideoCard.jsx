@@ -1,8 +1,11 @@
 import { Avatar } from "@mui/material";
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+import { loggedInUser } from "../../store/authSlice";
 
 export default function VideoCard({ post }) {
+    const user = useSelector(loggedInUser);
     const getTime = (time) => {
         const mongoTime = new Date(time);
         const currTime = new Date();
@@ -52,7 +55,15 @@ export default function VideoCard({ post }) {
                 <div>
                     <p className="text-xl">{post.title}</p>
                     <p className="text-sm hover:underline inline">
-                        {post.owner.userName}
+                        <Link
+                            to={
+                                user?.userName === post.owner.userName
+                                    ? `/profile`
+                                    : `/profiles/${post.owner.userName}`
+                            }
+                        >
+                            {post.owner.userName}
+                        </Link>
                     </p>
                     <p className="text-sm">
                         {post.views} views • {getTime(post.createdAt)} ago

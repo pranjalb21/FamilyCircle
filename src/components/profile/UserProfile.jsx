@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
-import dummyImage from "../../assets/DummyPost.jpg";
-import userImage from "../../assets/user.jpg";
-import VideoCard from "../card/VideoCard";
-import TopBar from "../navbar/TopBar";
+import React from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { FaCog } from "react-icons/fa";
+import { FaGear, FaUser } from "react-icons/fa6";
+import { Avatar } from "@mui/material";
+import avatar from "../../assets/user.jpg";
+import dummyImage from "../../assets/DummyPost.jpg";
+import VideoCard from "../card/VideoCard";
+import userImage from "../../assets/user.jpg";
+import TopBar from "../navbar/TopBar";
 import { useDispatch, useSelector } from "react-redux";
 import {
     allVideos,
@@ -15,17 +20,14 @@ import {
     tweetPage,
     videoPage,
 } from "../../store/postSlice";
+import { loggedInUser } from "../../store/authSlice";
+import { toast } from "react-toastify";
 import AllVideoPage from "../../pages/AllVideoPage";
 import AllImagePage from "../../pages/AllImagePage";
 import AllTweetPage from "../../pages/AllTweetPage";
-import { loggedInUser } from "../../store/authSlice";
+import { useParams } from "react-router-dom";
 
-export default function Home() {
-    const dispatch = useDispatch();
-    const video = useSelector(videoPage);
-    const user = useSelector(loggedInUser)
-    const image = useSelector(imagePage);
-    const tweet = useSelector(tweetPage);
+export default function UserProfile() {
     const posts = [
         {
             _id: 1,
@@ -97,46 +99,92 @@ export default function Home() {
             },
         },
     ];
-    const fetchVideos = async () => {
-        await axios
-            .get("videos/all")
+    const {username}=useParams()
+    const dispatch = useDispatch();
+    const videos = useSelector(allVideos);
+    const user = useSelector(loggedInUser);
+    const [userChannel, setUserChannel] = useState(null);
+    const [userPosts, setuserPosts] = useState(null);
+
+    const video = useSelector(videoPage);
+    const image = useSelector(imagePage);
+    const tweet = useSelector(tweetPage);
+    const fetchUserChannel = async (userName) => {
+        axios
+            .get(`users/channels/${userName}`)
+            .then((res) => {
+                setUserChannel(res.data.data);
+            })
+            .catch((err) => console.log(err.response));
+    };
+    const fetchUserVideos = async () => {
+        axios
+            .get(`videos/user/${userChannel._id}`)
             .then((res) => {
                 dispatch(setVideos(res.data.data));
             })
             .catch((err) => console.log(err.response));
     };
-    const fetchImages = async () => {
-        await axios
-            .get("images/all")
+    const fetchUserImages = async () => {
+        axios
+            .get(`images/user/${userChannel._id}`)
             .then((res) => {
                 dispatch(setImages(res.data.data));
             })
             .catch((err) => console.log(err.response));
     };
-    const fetchTweets = async () => {
-        await axios
-            .get("tweets/all")
+    const fetchUserTweets = async () => {
+        axios
+            .get(`tweets/user/${userChannel._id}`)
             .then((res) => {
                 dispatch(setTweets(res.data.data));
             })
             .catch((err) => console.log(err.response));
     };
     useEffect(() => {
-        fetchVideos();
-        fetchImages();
-        fetchTweets();
         dispatch(setVideoPage());
+        fetchUserVideos();
+        fetchUserImages();
+        fetchUserTweets();
+        fetchUserChannel(username);
     }, []);
-    return (
-        <div className="flex flex-col w-full">
+    return userChannel ? (
+        <div className=" w-full">
+            <div className="relative bg-gray-100 flex items-center justify-center sm:flex-row flex-col  p-4 md:gap-8 gap-4">
+                <Avatar
+                    sx={{
+                        width: { xs: 100, sm: 100, md: 120, lg: 140 },
+                        height: { xs: 100, sm: 100, md: 120, lg: 140 },
+                    }}
+                    src={userChannel.avatar}
+                    className="border-2"
+                />
+                <div className="sm:text-start text-center">
+                    <p>{userChannel.fullName}</p>
+                    <p>{userChannel.userName}</p>
+                    <p>
+                        {" "}
+                        <span>
+                            {userChannel.subscribersCount} Subscribers
+                        </span>{" "}
+                        |{" "}
+                        <span>
+                            {userChannel.subscribedChannelCount} Subscribed
+                        </span>{" "}
+                    </p>
+                </div>
+            </div>
             <TopBar />
             {video ? (
-                <AllVideoPage id={user._id} />
+                <AllVideoPage profile={true} id={userChannel?._id} />
             ) : image ? (
-                <AllImagePage />
+                <AllImagePage profile={true} id={userChannel?._id} />
             ) : (
-                <AllTweetPage />
+                <AllTweetPage profile={true} id={userChannel?._id} />
             )}
         </div>
+    ) : (
+        <div className=" w-full">No user found</div>
     );
 }
+

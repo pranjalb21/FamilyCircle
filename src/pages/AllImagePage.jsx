@@ -7,9 +7,9 @@ import { Pagination, Stack } from "@mui/material";
 import { loggedInUser } from "../store/authSlice";
 import axios from "axios";
 
-export default function AllImagePage({profile=false}) {
+export default function AllImagePage({ profile = false, id }) {
     const images = useSelector(allImages);
-    const user = useSelector(loggedInUser)
+    const user = useSelector(loggedInUser);
     const dispatch = useDispatch();
     const [page, setPage] = useState(1);
     const fetchImages = async (page) => {
@@ -20,19 +20,19 @@ export default function AllImagePage({profile=false}) {
             })
             .catch((err) => console.log(err.response));
     };
-    const fetchUserimages=async(page)=>{
+    const fetchUserimages = async (page, uid) => {
         await axios
-            .get(`images/user/${user?._id}/?page=${page}`)
+            .get(`images/user/${uid}/?page=${page}`)
             .then((res) => {
                 dispatch(setImages(res.data.data));
             })
             .catch((err) => console.log(err.response));
-    }
+    };
     useEffect(() => {
         if (!profile) {
             fetchImages(page);
-        }else{
-            fetchUserimages(page)
+        } else {
+            fetchUserimages(page, id);
         }
     }, [page]);
     const handleChange = (event, value) => {

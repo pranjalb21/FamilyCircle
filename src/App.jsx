@@ -26,7 +26,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/profile",
-        element: <ProfilePage title="Profile" />,
+        element: <ProfilePage title="Profile" self={true} />,
+    },
+    {
+        path: "/profiles/:username",
+        element: <ProfilePage title="Profile" self={false} />,
     },
     {
         path: "/subscribers",

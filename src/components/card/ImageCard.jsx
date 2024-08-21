@@ -6,12 +6,15 @@ import { Avatar } from "@mui/material";
 import { BiLike, BiSolidLike } from "react-icons/bi";
 import { FaRegComment } from "react-icons/fa6";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleImageLike } from "../../store/postSlice";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import { loggedInUser } from "../../store/authSlice";
 
 export default function ImageCard({ post }) {
     const dispatch = useDispatch();
+    const user = useSelector(loggedInUser)
     // const post = {
     //     image: dummyImage,
     //     likesCount: 10,
@@ -61,13 +64,24 @@ export default function ImageCard({ post }) {
             <div className="flex gap-2 p-2">
                 <Avatar src={post.owner.avatar} />
                 <div>
-                    <p className="text-md hover:underline inline">
-                        {post.owner.userName}
-                        <span className="text-sm ml-2">
-                            • {getTime(post.createdAt)}
+                    <p className="text-md">
+                        {post.owner.fullName}
+                        {" • "}
+                        <span className="text-sm">
+                            {getTime(post.createdAt)}
                         </span>
                     </p>
-                    <p className="text-sm">{post.owner.fullName}</p>
+                    <p className="text-sm hover:underline cursor-pointer">
+                        <Link
+                            to={
+                                user?.userName === post.owner.userName
+                                    ? `/profile`
+                                    : `/profiles/${post.owner.userName}`
+                            }
+                        >
+                            {post.owner.userName}
+                        </Link>
+                    </p>
                 </div>
             </div>
             <div className="relative h-72 box-border overflow-hidden">
