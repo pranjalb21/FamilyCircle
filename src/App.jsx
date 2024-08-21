@@ -12,6 +12,7 @@ import Logout from "./components/logout/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedInUser, login } from "./store/authSlice";
 import AddPostPage from "./pages/AddPostPage";
+import EditProfilePage from "./pages/EditProfilePage";
 
 axios.defaults.baseURL = "http://localhost:3000/api/v1/";
 
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
     {
         path: "/profile",
         element: <ProfilePage title="Profile" self={true} />,
+    },
+    {
+        path: "/profile/update",
+        element: <EditProfilePage title="Update Profile" />,
     },
     {
         path: "/profiles/:username",

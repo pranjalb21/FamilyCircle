@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { MdInfoOutline, MdLightMode, MdOutlineLightMode } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { loggedInUser, login, theme, toggleTheme, userLoginStatus } from "../../store/authSlice";
+import {
+    loggedInUser,
+    login,
+    theme,
+    toggleTheme,
+    userLoginStatus,
+} from "../../store/authSlice";
 import SideNav from "../navbar/SideNav";
 import { LuHome } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
@@ -46,7 +52,7 @@ export default function Layout({ children }) {
     const user = useSelector(loggedInUser);
     const handleLoad = async () => {
         const token = localStorage.getItem("accessToken");
-        if(!(token===null)){
+        if (!(token === null)) {
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         }
         if (!user) {
@@ -60,14 +66,16 @@ export default function Layout({ children }) {
     };
     useEffect(() => {
         handleLoad();
-    }, [user]);
-    return user? (
-        <div className="flex bg-grey-100 w-full min-h-screen">
-            <SideNav navOptions={navOptions} />
-            <Container>{children}</Container>
-            <BottomNav navOptions={navOptions} />
-        </div>
-    ) : (
-        <Navigate to={"/login"} />
-    );
+    }, []);
+
+    if (!user) {
+        return <Navigate to="/login" replace={true}></Navigate>;
+    } else
+        return (
+            <div className="flex bg-grey-100 w-full min-h-screen">
+                <SideNav navOptions={navOptions} />
+                <Container>{children}</Container>
+                <BottomNav navOptions={navOptions} />
+            </div>
+        );
 }

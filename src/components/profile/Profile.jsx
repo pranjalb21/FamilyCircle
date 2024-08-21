@@ -25,6 +25,7 @@ import { toast } from "react-toastify";
 import AllVideoPage from "../../pages/AllVideoPage";
 import AllImagePage from "../../pages/AllImagePage";
 import AllTweetPage from "../../pages/AllTweetPage";
+import { Link } from "react-router-dom";
 
 function Profile() {
     const posts = [
@@ -102,7 +103,6 @@ function Profile() {
     const videos = useSelector(allVideos);
     const user = useSelector(loggedInUser);
     const [userChannel, setUserChannel] = useState(null);
-    const [userPosts, setuserPosts] = useState(null);
 
     const video = useSelector(videoPage);
     const image = useSelector(imagePage);
@@ -171,10 +171,10 @@ function Profile() {
                         </span>{" "}
                     </p>
                 </div>
-                <div className="sm:self-start py-2 px-4 flex gap-3 items-center justify-center bg-gray-400 rounded-lg text-sm md:text-xl cursor-pointer hover:bg-gray-500 duration-300 hover:text-white">
+                <Link to={'/profile/update'} className="sm:self-start py-2 px-4 flex gap-3 items-center justify-center bg-gray-400 rounded-lg text-sm md:text-xl cursor-pointer hover:bg-gray-500 duration-300 hover:text-white">
                     <FaGear className="md:text-2xl text-xl" />{" "}
                     <span className="md:block sm:hidden ">Edit Profile</span>{" "}
-                </div>
+                </Link>
             </div>
             <TopBar />
             {video ? (
