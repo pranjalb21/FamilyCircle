@@ -72,7 +72,7 @@ export default function TweetCard({ post }) {
                             {getTime(post.createdAt)}
                         </span>
                     </p>
-                    <p className="text-sm hover:underline cursor-pointer">
+                    <p className="text-sm hover:underline cursor-pointer inline-block">
                         <Link
                             to={
                                 user?.userName === post.owner.userName

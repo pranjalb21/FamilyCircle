@@ -4,6 +4,7 @@ import { Avatar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { loggedInUser } from "../../store/authSlice";
 import axios from "axios";
+import { Link } from "react-router-dom";
 export default function Subscriber() {
     // const subscribers = [
     //     {
@@ -44,7 +45,8 @@ export default function Subscriber() {
             <div className="flex flex-wrap gap-3 md:justify-start justify-center">
                 {subscribers?.subscriberCount > 0 ? (
                     subscribers.subscribers.map((subscriber) => (
-                        <div
+                        <Link
+                            to={`/profiles/${subscriber.userName}`}
                             className="w-80 bg-white h-20 p-2 rounded-md shadow-sm flex gap-4 cursor-pointer hover:scale-101 duration-300 hover:shadow-md border"
                             key={subscriber._id}
                         >
@@ -56,7 +58,7 @@ export default function Subscriber() {
                                 <p>{subscriber.fullName}</p>
                                 <p>{subscriber.userName}</p>
                             </div>
-                        </div>
+                        </Link>
                     ))
                 ) : (
                     <p>No subscriber yet</p>

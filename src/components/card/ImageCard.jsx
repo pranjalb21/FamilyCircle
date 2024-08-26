@@ -60,7 +60,7 @@ export default function ImageCard({ post }) {
         }
     };
     return (
-        <div className="container sm:w-96 w-80 h-80 shadow-sm hover:shadow-md sm:h-96 rounded-md overflow-hidden cursor-pointer flex flex-col border">
+        <div className="container sm:w-96 w-80 h-80 shadow-sm hover:shadow-md sm:h-96 rounded-md overflow-hidden  flex flex-col border">
             <div className="flex gap-2 p-2">
                 <Avatar src={post.owner.avatar} />
                 <div>
@@ -71,7 +71,7 @@ export default function ImageCard({ post }) {
                             {getTime(post.createdAt)}
                         </span>
                     </p>
-                    <p className="text-sm hover:underline cursor-pointer">
+                    <p className="text-sm hover:underline cursor-pointer inline-block">
                         <Link
                             to={
                                 user?.userName === post.owner.userName
